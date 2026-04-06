@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "Farmacia Popular",
+    "slug": "farmacia-popular",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.seunome.farmaciapopular"
+    },
+    "android": {
+      "package": "com.seunome.farmaciapopular"
+    },
+    "web": {
+      "bundler": "metro"
+    },
+    "plugins": []
+  }
+}

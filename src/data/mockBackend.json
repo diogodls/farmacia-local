@@ -1,0 +1,100 @@
+{
+  "medicines": [
+    {
+      "id": "med-1",
+      "name": "Paracetamol",
+      "category": "Analgesico",
+      "dosage": "750mg",
+      "description": "Indicado para febre e dores leves a moderadas."
+    },
+    {
+      "id": "med-2",
+      "name": "Amoxicilina",
+      "category": "Antibiotico",
+      "dosage": "500mg",
+      "description": "Usado em infeccoes bacterianas sob orientacao medica."
+    },
+    {
+      "id": "med-3",
+      "name": "Losartana",
+      "category": "Anti-hipertensivo",
+      "dosage": "50mg",
+      "description": "Auxilia no controle da pressao arterial."
+    },
+    {
+      "id": "med-4",
+      "name": "Dipirona",
+      "category": "Analgesico",
+      "dosage": "1g",
+      "description": "Indicada para dores e estados febris."
+    },
+    {
+      "id": "med-5",
+      "name": "Omeprazol",
+      "category": "Gastrointestinal",
+      "dosage": "20mg",
+      "description": "Reduz a producao de acido no estomago."
+    },
+    {
+      "id": "med-6",
+      "name": "Metformina",
+      "category": "Antidiabetico",
+      "dosage": "850mg",
+      "description": "Utilizada no tratamento do diabetes tipo 2."
+    }
+  ],
+  "pharmacies": [
+    {
+      "id": "pha-1",
+      "name": "Farmacia Popular Centro",
+      "latitude": -29.6868,
+      "longitude": -53.8066,
+      "street": "Rua do Acampamento, 215",
+      "district": "Centro",
+      "city": "Santa Maria",
+      "state": "RS",
+      "phone": "(55) 3222-1001",
+      "openingHours": "Seg a Sex, 08h as 18h",
+      "medicineIds": ["med-1", "med-3", "med-5", "med-6"]
+    },
+    {
+      "id": "pha-2",
+      "name": "Farmacia Popular Camobi",
+      "latitude": -29.7214,
+      "longitude": -53.7174,
+      "street": "Faixa Nova de Camobi, 1450",
+      "district": "Camobi",
+      "city": "Santa Maria",
+      "state": "RS",
+      "phone": "(55) 3222-1002",
+      "openingHours": "Seg a Sab, 07h as 20h",
+      "medicineIds": ["med-1", "med-2", "med-4"]
+    },
+    {
+      "id": "pha-3",
+      "name": "Farmacia Popular Nossa Senhora de Fatima",
+      "latitude": -29.6998,
+      "longitude": -53.8093,
+      "street": "Av. Presidente Vargas, 980",
+      "district": "Nossa Senhora de Fatima",
+      "city": "Santa Maria",
+      "state": "RS",
+      "phone": "(55) 3222-1003",
+      "openingHours": "Todos os dias, 08h as 22h",
+      "medicineIds": ["med-2", "med-3", "med-6"]
+    },
+    {
+      "id": "pha-4",
+      "name": "Farmacia Popular Medianeira",
+      "latitude": -29.7153,
+      "longitude": -53.8152,
+      "street": "Av. Medianeira, 1635",
+      "district": "Medianeira",
+      "city": "Santa Maria",
+      "state": "RS",
+      "phone": "(55) 3222-1004",
+      "openingHours": "Seg a Sex, 08h as 17h",
+      "medicineIds": ["med-1", "med-4", "med-5"]
+    }
+  ]
+}
