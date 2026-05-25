@@ -11,7 +11,7 @@ import { PharmacyDetailsScreen } from "./src/components/PharmacyDetailsScreen";
 import { PharmacyMapSection } from "./src/components/PharmacyMapSection";
 import { SelectedMedicineCard } from "./src/components/SelectedMedicineCard";
 import { MenuSection, SideMenu } from "./src/components/SideMenu";
-import { mockMedicines, mockPharmacies } from "./src/data/mockData";
+import { useCatalogData } from "./src/hooks/useCatalogData";
 import { useFavorites } from "./src/hooks/useFavorites";
 import type { Medicine, Pharmacy } from "./src/types/pharmacy";
 import { colors } from "./src/styles/theme";
@@ -26,6 +26,7 @@ export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [menuSection, setMenuSection] = useState<MenuSection>("favorites");
   const [isMapInteracting, setIsMapInteracting] = useState(false);
+  const { medicines, pharmacies, isLoading, error } = useCatalogData();
 
   const { favorites, toggleFavorite } = useFavorites();
 
@@ -40,24 +41,24 @@ export default function App() {
       return [];
     }
 
-    return mockMedicines.filter((medicine) =>
+    return medicines.filter((medicine) =>
       medicine.name.toLowerCase().includes(normalizedQuery)
     );
-  }, [query, selectedMedicine]);
+  }, [medicines, query, selectedMedicine]);
 
   const visiblePharmacies = useMemo(() => {
     if (!selectedMedicine) {
-      return mockPharmacies;
+      return pharmacies;
     }
 
-    return mockPharmacies.filter((pharmacy) =>
+    return pharmacies.filter((pharmacy) =>
       pharmacy.medicineIds.includes(selectedMedicine.id)
     );
-  }, [selectedMedicine]);
+  }, [pharmacies, selectedMedicine]);
 
   const favoriteMedicines = useMemo(
-    () => mockMedicines.filter((medicine) => favorites.includes(medicine.id)),
-    [favorites]
+    () => medicines.filter((medicine) => favorites.includes(medicine.id)),
+    [favorites, medicines]
   );
 
   const mapRegion = useMemo(() => {
@@ -101,7 +102,7 @@ export default function App() {
       <SafeAreaView style={styles.screen}>
         <PharmacyDetailsScreen
           pharmacy={selectedPharmacy}
-          medicines={mockMedicines}
+          medicines={medicines}
           onBack={() => setScreen("home")}
           onOpenMedicine={openMedicineDetails}
         />
@@ -115,7 +116,7 @@ export default function App() {
       <SafeAreaView style={styles.screen}>
         <MedicineDetailsScreen
           medicine={selectedMedicine}
-          pharmacies={mockPharmacies}
+          pharmacies={pharmacies}
           favorites={favorites}
           onBack={() => setScreen("home")}
           onOpenPharmacy={openPharmacyDetails}
@@ -159,9 +160,17 @@ export default function App() {
         <View style={styles.helpStrip}>
           <Ionicons name="navigate-circle-outline" size={18} color={colors.accent} />
           <Text style={styles.helpStripText}>
-            Toque em um marcador para abrir o pop-up da farmacia.
+            {isLoading
+              ? "Carregando dados do catalogo..."
+              : "Toque em um marcador para abrir o pop-up da farmacia."}
           </Text>
         </View>
+
+        {error ? (
+          <View style={styles.apiNotice}>
+            <Text style={styles.apiNoticeText}>{error}</Text>
+          </View>
+        ) : null}
 
         {selectedMedicine ? (
           <View style={styles.filterNotice}>
@@ -265,5 +274,19 @@ const styles = StyleSheet.create({
   filterNoticeAction: {
     color: colors.success,
     fontWeight: "700",
+  },
+  apiNotice: {
+    marginHorizontal: 20,
+    marginBottom: 12,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    backgroundColor: colors.surfaceAlt,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  apiNoticeText: {
+    color: colors.textSecondary,
+    fontWeight: "600",
   },
 });

@@ -4,6 +4,17 @@ export type Medicine = {
   category: string;
   dosage: string;
   description: string;
+  type?: string;
+  component?: string | null;
+  pharmaceuticalForm?: string | null;
+  presentation?: string | null;
+  active?: boolean;
+  pharmacyIds?: string[];
+  cids?: Array<{
+    codigo: string;
+    descricao: string;
+    categoria: string | null;
+  }>;
 };
 
 export type Pharmacy = {
@@ -18,4 +29,7 @@ export type Pharmacy = {
   phone: string;
   openingHours: string;
   medicineIds: string[];
+  type?: string | null;
+  institution?: string | null;
+  medicines?: Medicine[];
 };

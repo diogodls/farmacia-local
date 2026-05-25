@@ -9,5 +9,9 @@
         "src/*"
       ]
     }
-  }
+  },
+  "exclude": [
+    "backend",
+    "node_modules"
+  ]
 }
