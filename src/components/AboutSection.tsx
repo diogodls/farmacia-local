@@ -38,7 +38,7 @@ export function AboutSection() {
         <View style={styles.infoRow}>
           <Ionicons name="information-circle" size={18} color={colors.accent} />
           <Text style={styles.infoText}>
-            Dados simulados com mock para apresentacao.
+            Dados carregados em tempo real pela API conectada ao banco Neon.
           </Text>
         </View>
       </View>

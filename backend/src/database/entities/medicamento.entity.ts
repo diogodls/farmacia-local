@@ -11,19 +11,19 @@ export class Medicamento {
   @Column({ name: 'principio_ativo', length: 250 })
   principioAtivo!: string;
 
-  @Column({ length: 200, nullable: true })
+  @Column({ type: 'varchar', length: 200, nullable: true })
   concentracao!: string | null;
 
-  @Column({ name: 'forma_farmaceutica', length: 120, nullable: true })
+  @Column({ type: 'varchar', name: 'forma_farmaceutica', length: 120, nullable: true })
   formaFarmaceutica!: string | null;
 
   @Column({ type: 'text', nullable: true })
   apresentacao!: string | null;
 
-  @Column({ length: 30 })
+  @Column({ type: 'varchar', length: 30 })
   tipo!: string;
 
-  @Column({ name: 'componente_assistencial', length: 80, nullable: true })
+  @Column({ type: 'varchar', name: 'componente_assistencial', length: 80, nullable: true })
   componenteAssistencial!: string | null;
 
   @Column({ type: 'text', nullable: true })
@@ -32,10 +32,10 @@ export class Medicamento {
   @Column({ default: true })
   ativo!: boolean;
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({ name: 'criado_em' })
   createdAt!: Date;
 
-  @UpdateDateColumn({ name: 'updated_at' })
+  @UpdateDateColumn({ name: 'atualizado_em' })
   updatedAt!: Date;
 
   @OneToMany(() => MedicamentoCid, (medicamentoCid) => medicamentoCid.medicamento)

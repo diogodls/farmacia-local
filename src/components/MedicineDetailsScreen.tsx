@@ -26,9 +26,15 @@ export function MedicineDetailsScreen({
   onToggleFavorite,
 }: MedicineDetailsScreenProps) {
   const isFavorite = favorites.includes(medicine.id);
-  const relatedPharmacies = pharmacies.filter((pharmacy) =>
-    pharmacy.medicineIds.includes(medicine.id)
-  );
+  const relatedPharmacies =
+    medicine.pharmacies && medicine.pharmacies.length > 0
+      ? medicine.pharmacies
+          .map((pharmacy) => {
+            const hydratedPharmacy = pharmacies.find((item) => item.id === pharmacy.id);
+            return hydratedPharmacy ?? null;
+          })
+          .filter((pharmacy): pharmacy is Pharmacy => pharmacy !== null)
+      : pharmacies.filter((pharmacy) => pharmacy.medicineIds.includes(medicine.id));
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

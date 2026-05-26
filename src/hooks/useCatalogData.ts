@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import type { Medicine, Pharmacy } from "../types/pharmacy";
-import { fetchBootstrapData } from "../services/api";
+import { API_BASE_URL, fetchBootstrapData } from "../services/api";
 
 type CatalogDataState = {
   medicines: Medicine[];
@@ -23,19 +23,19 @@ export function useCatalogData() {
 
     async function load() {
       try {
-        const data = await fetchBootstrapData();
+        const { medicines, pharmacies } = await fetchBootstrapData();
 
         if (!isMounted) {
           return;
         }
 
         setState({
-          medicines: data.medicines,
-          pharmacies: data.pharmacies,
+          medicines,
+          pharmacies,
           isLoading: false,
           error: null,
         });
-      } catch {
+      } catch (error) {
         if (!isMounted) {
           return;
         }
@@ -43,7 +43,10 @@ export function useCatalogData() {
         setState((current) => ({
           ...current,
           isLoading: false,
-          error: "Nao foi possivel carregar os dados.",
+          error:
+            error instanceof Error
+              ? `Nao foi possivel carregar os dados da API em ${API_BASE_URL} (${error.message}).`
+              : `Nao foi possivel carregar os dados da API em ${API_BASE_URL}.`,
         }));
       }
     }

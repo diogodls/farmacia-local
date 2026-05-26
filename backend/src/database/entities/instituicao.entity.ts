@@ -16,10 +16,10 @@ export class Instituicao {
   @Column({ length: 2, default: 'RS' })
   uf!: string;
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({ name: 'criado_em' })
   createdAt!: Date;
 
-  @UpdateDateColumn({ name: 'updated_at' })
+  @UpdateDateColumn({ name: 'atualizado_em' })
   updatedAt!: Date;
 
   @OneToMany(() => Farmacia, (farmacia) => farmacia.instituicao)

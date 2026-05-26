@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -13,6 +13,7 @@ import { SelectedMedicineCard } from "./src/components/SelectedMedicineCard";
 import { MenuSection, SideMenu } from "./src/components/SideMenu";
 import { useCatalogData } from "./src/hooks/useCatalogData";
 import { useFavorites } from "./src/hooks/useFavorites";
+import { fetchMedicineById, fetchPharmacyById } from "./src/services/api";
 import type { Medicine, Pharmacy } from "./src/types/pharmacy";
 import { colors } from "./src/styles/theme";
 
@@ -27,6 +28,8 @@ export default function App() {
   const [menuSection, setMenuSection] = useState<MenuSection>("favorites");
   const [isMapInteracting, setIsMapInteracting] = useState(false);
   const { medicines, pharmacies, isLoading, error } = useCatalogData();
+  const medicineRequestRef = useRef(0);
+  const pharmacyRequestRef = useRef(0);
 
   const { favorites, toggleFavorite } = useFavorites();
 
@@ -87,14 +90,36 @@ export default function App() {
     setQuery("");
   }
 
-  function openMedicineDetails(medicine: Medicine) {
+  async function openMedicineDetails(medicine: Medicine) {
     selectMedicineForMap(medicine);
     setScreen("medicine-details");
+
+    const requestId = (medicineRequestRef.current += 1);
+
+    try {
+      const freshMedicine = await fetchMedicineById(medicine.id);
+      if (medicineRequestRef.current === requestId) {
+        setSelectedMedicine(freshMedicine);
+      }
+    } catch {
+      // Mantem o snapshot atual em caso de falha na API.
+    }
   }
 
-  function openPharmacyDetails(pharmacy: Pharmacy) {
+  async function openPharmacyDetails(pharmacy: Pharmacy) {
     setSelectedPharmacy(pharmacy);
     setScreen("pharmacy-details");
+
+    const requestId = (pharmacyRequestRef.current += 1);
+
+    try {
+      const freshPharmacy = await fetchPharmacyById(pharmacy.id);
+      if (pharmacyRequestRef.current === requestId) {
+        setSelectedPharmacy(freshPharmacy);
+      }
+    } catch {
+      // Mantem o snapshot atual em caso de falha na API.
+    }
   }
 
   if (screen === "pharmacy-details" && selectedPharmacy) {
@@ -135,6 +160,7 @@ export default function App() {
         showsVerticalScrollIndicator={false}
         scrollEnabled={!isMapInteracting}
         nestedScrollEnabled
+        keyboardShouldPersistTaps="handled"
       >
         <HomeHeader
           query={query}

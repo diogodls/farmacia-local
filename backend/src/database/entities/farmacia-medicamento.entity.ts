@@ -25,10 +25,10 @@ export class FarmaciaMedicamento {
   @Column({ length: 20, default: 'MANUAL' })
   origem!: string;
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({ name: 'criado_em' })
   createdAt!: Date;
 
-  @UpdateDateColumn({ name: 'updated_at' })
+  @UpdateDateColumn({ name: 'atualizado_em' })
   updatedAt!: Date;
 
   @ManyToOne(() => Farmacia, (farmacia) => farmacia.farmaciaMedicamentos, { eager: false })

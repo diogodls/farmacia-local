@@ -21,9 +21,13 @@ export function PharmacyDetailsScreen({
   onBack,
   onOpenMedicine,
 }: PharmacyDetailsScreenProps) {
-  const availableMedicines = medicines.filter((medicine) =>
-    pharmacy.medicineIds.includes(medicine.id)
-  );
+  const availableMedicines =
+    pharmacy.medicines && pharmacy.medicines.length > 0
+      ? pharmacy.medicines.map((medicine) => {
+          const hydratedMedicine = medicines.find((item) => item.id === medicine.id);
+          return hydratedMedicine ?? medicine;
+        })
+      : medicines.filter((medicine) => pharmacy.medicineIds.includes(medicine.id));
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

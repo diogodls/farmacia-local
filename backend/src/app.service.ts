@@ -20,7 +20,7 @@ export class AppService {
 
   async getBootstrap() {
     const [medicines, pharmacies] = await Promise.all([
-      this.medicinesService.findAll({ limit: 500 }),
+      this.medicinesService.findAll({ limit: 1000 }),
       this.pharmaciesService.findAll({ limit: 100 }),
     ]);
 

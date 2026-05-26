@@ -1,43 +1,51 @@
 # Farmacia Popular
 
-Aplicativo mobile em Expo + TypeScript para localizar farmácias populares, pesquisar remédios e salvar favoritos.
+Aplicativo mobile em Expo + TypeScript para localizar farmacias populares, pesquisar remedios e salvar favoritos.
 
 ## Funcionalidades
 
-- Mapa com marcadores das farmácias populares;
-- Busca de remédios com autocomplete;
-- Filtro do mapa pelo remédio selecionado;
-- Pop-up do marcador com resumo da farmácia;
-- Tela de detalhes da farmácia;
-- Tela de detalhes do remédio;
-- Favoritos com persistência local usando `AsyncStorage`;
-- Dados simulados a partir de um mock em JSON.
+- Mapa com marcadores das farmacias populares.
+- Busca de remedios com autocomplete.
+- Filtro do mapa pelo remedio selecionado.
+- Pop-up do marcador com resumo da farmacia.
+- Tela de detalhes da farmacia.
+- Tela de detalhes do remedio.
+- Favoritos com persistencia local usando `AsyncStorage`.
+- Dados carregados pela API NestJS conectada ao banco Neon.
 
 ## Estrutura principal
 
-- `App.tsx`: composição das telas e estado principal.
+- `App.tsx`: composicao das telas e estado principal.
 - `src/components/`: componentes visuais e telas detalhadas.
-- `src/hooks/useFavorites.ts`: persistência dos favoritos.
-- `src/data/mockBackend.json`: mock do backend com farmácias e remédios.
-- `src/data/mockData.ts`: adaptador tipado para consumir o JSON.
+- `src/hooks/useFavorites.ts`: persistencia dos favoritos.
+- `src/hooks/useCatalogData.ts`: carga inicial dos dados vindos da API.
+- `src/services/api.ts`: cliente HTTP e resolucao da URL base.
 - `src/types/pharmacy.ts`: tipagens do projeto.
 - `src/styles/theme.ts`: tema visual centralizado.
 
 ## Como rodar
 
-1. Instale as dependências:
+1. Instale as dependencias:
 
 ```bash
 npm install
 ```
 
-2. Inicie o projeto:
+2. Defina a URL da API quando necessario:
+
+```bash
+EXPO_PUBLIC_API_URL=http://SEU_IP_LOCAL:3001/api
+```
+
+Se a variavel nao for definida, o app tenta descobrir automaticamente o host da maquina de desenvolvimento e usar a porta `3001`.
+
+3. Inicie o projeto:
 
 ```bash
 npx expo start
 ```
 
-## Dependências esperadas
+## Dependencias esperadas
 
 - `expo`
 - `react-native-maps`
@@ -45,9 +53,9 @@ npx expo start
 
 ## Fluxo implementado
 
-1. O usuário pesquisa um remédio no input.
-2. O autocomplete mostra sugestões.
-3. Ao selecionar um remédio, o mapa é filtrado para as farmácias que possuem esse item.
-4. O marcador abre um pop-up com informações resumidas.
-5. Ao tocar no pop-up, o usuário abre a tela detalhada da farmácia.
-6. O remédio também possui tela própria e pode ser favoritado.
+1. O usuario pesquisa um remedio no input.
+2. O autocomplete mostra sugestoes.
+3. Ao selecionar um remedio, o mapa e filtrado para as farmacias que possuem esse item.
+4. O marcador abre um pop-up com informacoes resumidas.
+5. Ao tocar no pop-up, o usuario abre a tela detalhada da farmacia.
+6. O remedio tambem possui tela propria e pode ser favoritado.

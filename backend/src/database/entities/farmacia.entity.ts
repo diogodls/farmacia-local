@@ -20,25 +20,25 @@ export class Farmacia {
   @Column({ length: 200 })
   nome!: string;
 
-  @Column({ length: 50, nullable: true })
+  @Column({ type: 'varchar', length: 50, nullable: true })
   tipo!: string | null;
 
   @Column({ type: 'text', nullable: true })
   endereco!: string | null;
 
-  @Column({ length: 100, nullable: true })
+  @Column({ type: 'varchar', length: 100, nullable: true })
   bairro!: string | null;
 
-  @Column({ length: 100, default: 'Santa Maria' })
+  @Column({ type: 'varchar', length: 100, default: 'Santa Maria' })
   cidade!: string;
 
   @Column({ name: 'id_instituicao' })
   idInstituicao!: number;
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({ name: 'criado_em' })
   createdAt!: Date;
 
-  @UpdateDateColumn({ name: 'updated_at' })
+  @UpdateDateColumn({ name: 'atualizado_em' })
   updatedAt!: Date;
 
   @ManyToOne(() => Instituicao, (instituicao) => instituicao.farmacias, { eager: false })

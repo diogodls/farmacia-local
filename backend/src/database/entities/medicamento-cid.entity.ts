@@ -14,7 +14,7 @@ export class MedicamentoCid {
   @Column({ name: 'codigo_cid', length: 10 })
   codigoCid!: string;
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({ name: 'criado_em' })
   createdAt!: Date;
 
   @ManyToOne(() => Medicamento, (medicamento) => medicamento.medicamentoCids, { eager: false })
