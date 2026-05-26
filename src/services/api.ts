@@ -1,16 +1,40 @@
+import Constants from "expo-constants";
 import { NativeModules, Platform } from "react-native";
 
 import type { Medicine, Pharmacy } from "@/types/pharmacy";
+
+function extractHost(value: string | null | undefined) {
+  if (!value) {
+    return null;
+  }
+
+  const trimmedValue = value.trim();
+  const withoutProtocol = trimmedValue.replace(/^https?:\/\//i, "");
+  const host = withoutProtocol.split(/[/:]/)[0];
+
+  if (!host || host === "localhost" || host === "127.0.0.1" || host === "0.0.0.0") {
+    return null;
+  }
+
+  return host;
+}
 
 function getDevServerHost() {
   if (Platform.OS === "web" && typeof window !== "undefined") {
     return window.location.hostname;
   }
 
-  const scriptURL = NativeModules.SourceCode?.scriptURL;
-  const match = typeof scriptURL === "string" ? scriptURL.match(/https?:\/\/([^/:]+)/i) : null;
+  const expoHost =
+    extractHost(Constants.expoConfig?.hostUri) ??
+    extractHost((Constants as unknown as { manifest2?: { extra?: { expoGo?: { debuggerHost?: string } } } }).manifest2?.extra?.expoGo?.debuggerHost) ??
+    extractHost((Constants as unknown as { manifest?: { debuggerHost?: string } }).manifest?.debuggerHost);
 
-  return match?.[1] ?? null;
+  if (expoHost) {
+    return expoHost;
+  }
+
+  const scriptURL = NativeModules.SourceCode?.scriptURL;
+  return extractHost(typeof scriptURL === "string" ? scriptURL : null);
 }
 
 function resolveApiBaseUrl() {
@@ -26,10 +50,7 @@ function resolveApiBaseUrl() {
     return `http://${host}:3001/api`;
   }
 
-  return Platform.select({
-    android: "http://10.0.2.2:3001/api",
-    default: "http://127.0.0.1:3001/api",
-  });
+  return "http://127.0.0.1:3001/api";
 }
 
 const API_BASE_URL = resolveApiBaseUrl();

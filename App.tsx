@@ -188,7 +188,7 @@ export default function App() {
           <Text style={styles.helpStripText}>
             {isLoading
               ? "Carregando dados do catalogo..."
-              : "Toque em um marcador para abrir o pop-up da farmacia."}
+              : "Toque no ponto laranja para abrir as informações da farmácia."}
           </Text>
         </View>
 
