@@ -79,7 +79,7 @@ export function HomeHeader({
                     color={colors.accent}
                   />
                 </View>
-                <View>
+                <View style={styles.autocompleteText}>
                   <Text style={styles.autocompleteTitle}>{medicine.name}</Text>
                   <Text style={styles.autocompleteSubtitle}>{medicine.category}</Text>
                 </View>
@@ -207,6 +207,9 @@ const styles = StyleSheet.create({
     flex: 1,
     marginRight: spacing.sm,
   },
+  autocompleteText: {
+    flexShrink: 1,
+  },
   autocompleteIcon: {
     width: 36,
     height: 36,
@@ -219,15 +222,20 @@ const styles = StyleSheet.create({
     fontSize: typography.body,
     fontWeight: "600",
     color: colors.textPrimary,
+    flexShrink: 1,
+    flexWrap: "wrap",
   },
   autocompleteSubtitle: {
     fontSize: typography.bodySm,
     color: colors.textMuted,
     marginTop: 2,
+    flexShrink: 1,
+    flexWrap: "wrap",
   },
   autocompleteTag: {
     fontSize: typography.caption,
     fontWeight: "700",
     color: colors.accent,
+    alignSelf: "flex-start",
   },
 });
