@@ -1,6 +1,15 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useMemo, useRef, useState } from "react";
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  StatusBar as RNStatusBar,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+
 import { Ionicons } from "@expo/vector-icons";
 
 import { FavoritesSection } from "./src/components/FavoritesSection";
@@ -251,6 +260,8 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: colors.background,
+    paddingTop:
+      Platform.OS === "android" ? Math.max(RNStatusBar.currentHeight ?? 0, 8) : 0,
   },
   homeScroll: {
     flex: 1,
